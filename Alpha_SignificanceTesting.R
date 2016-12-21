@@ -21,12 +21,10 @@ pValuesTot <- c()
 
 for (i in 1:nRep){
   df <- data.frame(matrix(NA, nrow = nSample, ncol=nPredictors))
-  
   # Create predictor variables with random data
   for (i in 1:nPredictors){
     df[[paste('X', i, sep='')]] <- sample(1:(nSample*10), nSample, replace=T)
   }  
-  
   # Create response variable 'y' from a normal distribution: mean = 10, variance =25
   df$y <- rnorm(nSample, 10, 5)
   # Run regression on dataframe
@@ -43,4 +41,10 @@ prop <- count/(nRep*nPredictors)
 
 message("Proportion of variables found to be significant: ", prop, "% (n = ", count, ")")
 
-#### As you can see, the proportion of 
+##### Discussion of Results #####
+# NOTE: See ReadMe for fuller discussion
+# As you can see, the proportion of variables found to be significant by chance approaches alpha (as repitions increase).
+# Since we generated our data without true underlying relationships between the predictor variables and the response variable,
+# none of the predictors are actually useful in explaining the variation in the response. However, by virtue of how we test
+# for significance and the meaning of alpha, there is always a chance (alpha of n-tests) that we find a falsely significant
+# relationship.
