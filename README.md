@@ -1,2 +1,4 @@
-# LinearModels
-Assignments for my Linear Models class. Some are team assignments, some are individual.
+# Statistics
+In this repository, I explore some of the fundamental concepts of statistics. 
+
+Alpha_SignificanceTesting.R
