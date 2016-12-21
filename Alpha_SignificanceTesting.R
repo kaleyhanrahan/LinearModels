@@ -1,35 +1,46 @@
 ##################################################
 ### Understanding Alpha - Significance Testing ###
 ##################################################
+library(dplyr)
 
-numPredictors <- 4
+# Set seed for replicability when generating random numbers
+set.seed(7)
+
+### Parameters to play around with
+# Set number of iterations for loop (the higher it is, the more clear the effect)
 nRep <- 1000
-dfSigTot <- c()
+# Set sample size for each regression
+nSample <- 100
+# Set alpha level (convention is usually 0.05, occasionally 0.01)
+alpha <- 0.05
+# Set number of predictors
+nPredictors <- 4
+
+# Initialize dataframe to hold p-values of each variable for each regression
+pValuesTot <- c()
 
 for (i in 1:nRep){
-  df <- data.frame(matrix(NA, nrow = 100, ncol=numPredictors))
-  df$X1 <- seq(1, 200, 2)
-  df$X2 <- sample(1:2000, 100, replace=T)
-  df$X3 <- sample(1:100, 100, replace=F)
-  df$X4 <- sample(1:100, 100, replace=T)
-  df$y <- rnorm(100, 10, 5)
+  df <- data.frame(matrix(NA, nrow = nSample, ncol=nPredictors))
   
-  hist(df$y, breaks=15)
+  # Create predictor variables with random data
+  for (i in 1:nPredictors){
+    df[[paste('X', i, sep='')]] <- sample(1:(nSample*10), nSample, replace=T)
+  }  
   
+  # Create response variable 'y' from a normal distribution: mean = 10, variance =25
+  df$y <- rnorm(nSample, 10, 5)
+  # Run regression on dataframe
   lm <- lm(y~., data=df)
-  
-  x1Sig <- anova(lm)$"Pr(>F)"[1]
-  x2Sig <- anova(lm)$"Pr(>F)"[2]
-  x3Sig <- anova(lm)$"Pr(>F)"[3]
-  x4Sig <- anova(lm)$"Pr(>F)"[4]
-  
-  dfSig <- data.frame(x1Sig, x2Sig, x3Sig, x4Sig)
-  
-  dfSigTot <- rbind(dfSigTot, dfSig)
+  # Pull the p-values for each predictor
+  pValues <- anova(lm)$"Pr(>F)"[1:nPredictors]
+  pValuesTot <- rbind(pValuesTot, pValues)
 }
 
-count <- c(sapply(dfSigTot, function(x) sum(x<=0.05)))
-prop <- count/nRep
+# Count the number of variables with p-values found to be significant (based on set p-values)
+count <- sum(pValuesTot<=alpha)
+# Find the PROPORTION of variables with p-values found to be significant (based on set p-values)
+prop <- count/(nRep*nPredictors)
 
-countTot <- sum(count)
-propTot <- countTot / (nRep*numPredictors)
+message("Proportion of variables found to be significant: ", prop, "% (n = ", count, ")")
+
+#### As you can see, the proportion of 
