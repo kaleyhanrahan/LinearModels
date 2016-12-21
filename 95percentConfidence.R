@@ -1,12 +1,3 @@
-# STAT 6021
-# Team Assignment 2
-
-# Names:
-# Kaley Hanrahan (knh9yd)
-# Chris Patrick (cpp4f)
-# Kevin Sun (kws8de)
-# Qi Tang (qt4ur)
-
 ###########################
 #                         #
 #   Team Assignment 2     #
@@ -93,5 +84,4 @@ totVar <- 20*100 # Total number of explanatory vars tested for significance = 20
 sigVar/totVar # Proportion of significant vars in the 100 simulations = 0.048
 
 # The proportion of significant vars in the 100 simulations is 0.048 (96 out of 2000).
-# Our expected theoretical value is 0.05. Given that we are testing at the 5% level, we
-# would expect that 5% should be significant by chance.
+# Given we set our alpha = 0.05, we would expect about 5% to be significant by chance.
