@@ -4,10 +4,6 @@
 #                         #
 ###########################
 
-## Please submit one set of answers per team.            ##
-## Your answers may be submitted as an annotated R file. ##
-###########################################################
-
 library(dplyr)
 set.seed(7)
 p1 <- read.csv("teamassign02data01.csv")
@@ -63,10 +59,10 @@ b1_true <- as.numeric(coef(true.lm)[2]) # True B1 = 4.07
 #   (c) Determine the number of significant explanatory variables at the 5% level.
 #   (d) Determine and report the proportion of significant variables in the 100
 #       simulations. Compare this proportion with the expected theoretical value.
-
+#### Understanding Alpha - Significance Testing
 nSig = c()
 for (i in 1:100){
-  ### Part a - Pairing y-values with corresponding rows from data set 'p2'
+  # Generate y-values according to the model y ~ N(10, var=5^2), pair with dataset of x-values
   p2$y <- rnorm(100, 10, 5)
   
   ### Part b - Generate multiple regression model with all of the x-values as explanatory variables
