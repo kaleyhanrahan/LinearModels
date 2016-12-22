@@ -4,3 +4,4 @@ Many of these were inspired by assignments for classes I am taking for my master
 
 #### Description of Contents:
 Alpha_SignificanceTesting.R
+ConfidenceIntervals.R
